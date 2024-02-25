@@ -9,6 +9,7 @@ function App() {
     <div className="App">
       <NavBar />
       <Routes>
+        <Route path="/" element={<MainContent />} />
         <Route path="/home" element={<MainContent />} />
         <Route path="/add" element={<Addition />} />
       </Routes>
