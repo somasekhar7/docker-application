@@ -1,4 +1,4 @@
-import logo from "./logo.jpeg";
+import mypic from "./mypic.jpeg";
 import "./MainContent.css";
 import React, { useState, useEffect } from "react";
 
@@ -53,7 +53,7 @@ const MainContent = () => {
   return (
     <div className="container">
       <div>
-        <img src={logo} alt="Profile Pic" className="profilepic" />
+        <img src={mypic} alt="Profile Pic" className="profilepic" />
       </div>
       <div className="content">
         {/* Input field */}
