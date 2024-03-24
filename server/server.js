@@ -122,9 +122,18 @@ app.delete("/inventory/delete-item/:id", async (req, res) => {
   try {
     const deletedItem = await InventoryItem.findByIdAndDelete(req.params.id);
     if (deletedItem.itemImage) {
-      fs.unlinkSync(
-        path.join(__dirname, "public", "uploads", deletedItem.itemImage)
+      const imagePath = path.join(
+        __dirname,
+        "localstorage",
+        "uploads",
+        deletedItem.itemImage
       );
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath); // Delete the file if it exists
+        console.log(`File ${deletedItem.itemImage} deleted successfully`);
+      } else {
+        console.warn(`File ${deletedItem.itemImage} doesn't exist`);
+      }
     }
     res.json({ message: "Deleted item" });
   } catch (error) {
