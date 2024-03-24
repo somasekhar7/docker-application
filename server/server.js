@@ -63,18 +63,12 @@ app.post("/api/addition", (req, res) => {
 // Get all inventory items
 app.get("/inventory", async (req, res) => {
   try {
-    const inventoryItems = await InventoryItem.find();
+    const inventoryItems = await InventoryItem.find().maxTimeMS(10000);
     res.json(inventoryItems);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
-
-// Serve uploaded images
-// app.use(
-//   "/uploads",
-//   express.static(path.join(__dirname, "localstorage", "uploads"))
-// );
 
 // Add an inventory item
 app.post(
