@@ -1,6 +1,6 @@
 import mypic from "./mypic.jpeg";
-import "./MainContent.css";
 import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Button } from "react-bootstrap";
 
 const MainContent = () => {
   // State variables for input text, edit mode, and initial value
@@ -14,7 +14,7 @@ const MainContent = () => {
   useEffect(() => {
     const storedText = "DARISI VENKATA VEERA SOMASEKHAR";
     const storedBio =
-      "I hold a Bachelor's degree in Computer Science from Anna University, where I graduated with honors. My undergraduate studies provided me with a solid foundation in fundamental computer science concepts, including data structures, algorithms, programming languages, and software engineering principles. As an MS student, I am eager to delve deeper into specialized aread pf computer science and pursue advanced coursework in Machine Learning and Artificial Intelligence.";
+      "I hold a Bachelor's degree in Computer Science from Anna University, where I graduated with honors. My undergraduate studies provided me with a solid foundation in fundamental computer science concepts, including data structures, algorithms, programming languages, and software engineering principles. As an MS student, I am eager to delve deeper into specialized areas of computer science and pursue advanced coursework in Machine Learning and Artificial Intelligence.";
     if (storedText || storedBio) {
       setInitialText(storedText);
       setText(storedText);
@@ -50,48 +50,55 @@ const MainContent = () => {
     setBio(initialBio);
     setEditMode(false);
   };
-  return (
-    <div className="container">
-      <div>
-        <img src={mypic} alt="Profile Pic" className="profilepic" />
-      </div>
-      <div className="content">
-        {/* Input field */}
-        <input
-          id="name"
-          type="text"
-          value={editMode ? text : initialText}
-          onChange={handleNameChange}
-          readOnly={!editMode}
-        />
-        <textarea
-          typeof="richtext/plain"
-          id="bio"
-          name="bio"
-          rows="7"
-          cols="30"
-          value={editMode ? bio : initialBio}
-          onChange={handleBioChange}
-          readOnly={!editMode}
-        ></textarea>
 
-        {/* Buttons */}
-        {editMode ? (
-          <>
-            <button id="btn" onClick={handleSave}>
-              Save
-            </button>
-            <button id="btn" onClick={handleReset}>
-              Cancel
-            </button>
-          </>
-        ) : (
-          <button id="btn" onClick={handleEdit}>
-            Edit
-          </button>
-        )}
-      </div>
-    </div>
+  return (
+    <Container fluid>
+      <Row className="align-items-center">
+        <Col sm={12} md={6} lg={3}>
+          <img src={mypic} alt="Profile Pic" className="profilepic img-fluid" />
+        </Col>
+        <Col sm={12} md={6} lg={9}>
+          <div className="content">
+            {/* Input field */}
+            <input
+              id="name"
+              type="text"
+              value={editMode ? text : initialText}
+              onChange={handleNameChange}
+              readOnly={!editMode}
+              className="form-control mb-3"
+              placeholder="Enter your name"
+            />
+            <textarea
+              id="bio"
+              name="bio"
+              rows="7"
+              value={editMode ? bio : initialBio}
+              onChange={handleBioChange}
+              readOnly={!editMode}
+              className="form-control mb-3"
+              placeholder="Enter your bio"
+            ></textarea>
+
+            {/* Buttons */}
+            {editMode ? (
+              <>
+                <Button variant="primary" className="me-2" onClick={handleSave}>
+                  Save
+                </Button>
+                <Button variant="secondary" onClick={handleReset}>
+                  Cancel
+                </Button>
+              </>
+            ) : (
+              <Button variant="primary" onClick={handleEdit}>
+                Edit
+              </Button>
+            )}
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
