@@ -7,7 +7,10 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const bodyParser = require("body-parser");
+
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Allow all origins for demonstration purposes
 app.use(cors());
@@ -30,7 +33,7 @@ app.use(express.json()); // Allows us to handle JSON data in the request body.
 // Multer is a middleware that handles multipart/form-data, which is primarily used for uploading files.
 // IMAGE UPLOAD SETTING
 const storage = multer.diskStorage({
-  destination: "public/uploads/",
+  destination: "localstorage/uploads/",
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
   },
@@ -65,7 +68,10 @@ app.get("/inventory", async (req, res) => {
 });
 
 // Serve uploaded images
-app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "localstorage", "uploads"))
+);
 
 // Add an inventory item
 app.post(
