@@ -23,7 +23,7 @@ function InventoryManagement() {
   const fetchInventoryItems = async () => {
     try {
       const response = await axios.get(
-        "http://ec2-13-58-12-216.us-east-2.compute.amazonaws.com:5005/inventory"
+        "http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/inventory"
       );
       setInventoryItems(response.data);
     } catch (error) {
@@ -52,7 +52,7 @@ function InventoryManagement() {
 
     try {
       await axios.post(
-        "http://ec2-13-58-12-216.us-east-2.compute.amazonaws.com:5005/inventory/add-item",
+        "http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/inventory/add-item",
         formDataToSend
       );
       setFormData({
@@ -84,7 +84,7 @@ function InventoryManagement() {
     }
     try {
       await axios.put(
-        `http://ec2-13-58-12-216.us-east-2.compute.amazonaws.com:5005/inventory/update-item/${editingItem._id}`,
+        `http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/inventory/update-item/${editingItem._id}`,
         {
           itemName: formData.itemName,
           itemQuantity: formData.itemQuantity,
@@ -107,10 +107,10 @@ function InventoryManagement() {
     setShowDeleteModal(false);
     try {
       await axios.delete(
-        `http://ec2-13-58-12-216.us-east-2.compute.amazonaws.com:5005/inventory/delete-item/${itemIdToDelete}`
+        `http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/inventory/delete-item/${itemIdToDelete}`
       );
-      toast.success("Item deleted successfully");
       fetchInventoryItems();
+      toast.success("Item deleted successfully");
     } catch (error) {
       console.error("Error deleting inventory item:", error);
     }
@@ -185,7 +185,7 @@ function InventoryManagement() {
               <Card style={{ width: "18rem" }}>
                 <Card.Img
                   variant="top"
-                  src={`http://ec2-13-58-12-216.us-east-2.compute.amazonaws.com:5005/uploads/${item.itemImage}`}
+                  src={`http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/uploads/${item.itemImage}`}
                   style={{ height: "200px", objectFit: "cover" }}
                 />
                 <Card.Body>

@@ -17,7 +17,7 @@ function Addition() {
   const handleAddition = async (sum) => {
     try {
       const response = await fetch(
-        "http://ec2-13-58-12-216.us-east-2.compute.amazonaws.com:5005/api/addition",
+        "http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/api/addition",
         {
           method: "POST",
           headers: {
