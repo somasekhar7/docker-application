@@ -16,7 +16,7 @@ function Addition() {
 
   const handleAddition = async (sum) => {
     try {
-      const response = await fetch("http://localhost:5005/api/addition", {
+      const response = await fetch("http://3.131.158.21/api/addition", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -22,7 +22,7 @@ function InventoryManagement() {
 
   const fetchInventoryItems = async () => {
     try {
-      const response = await axios.get("http://localhost:5005/inventory");
+      const response = await axios.get("http://l3.131.158.21:5005/inventory");
       setInventoryItems(response.data);
     } catch (error) {
       console.error("Error fetching inventory items:", error);
@@ -50,7 +50,7 @@ function InventoryManagement() {
 
     try {
       await axios.post(
-        "http://localhost:5005/inventory/add-item",
+        "http://3.131.158.21:5005/inventory/add-item",
         formDataToSend
       );
       setFormData({
@@ -82,7 +82,7 @@ function InventoryManagement() {
     }
     try {
       await axios.put(
-        `http://localhost:5005/inventory/update-item/${editingItem._id}`,
+        `http://3.131.158.21:5005/inventory/update-item/${editingItem._id}`,
         {
           itemName: formData.itemName,
           itemQuantity: formData.itemQuantity,
@@ -105,7 +105,7 @@ function InventoryManagement() {
     setShowDeleteModal(false);
     try {
       await axios.delete(
-        `http://localhost:5005/inventory/delete-item/${itemIdToDelete}`
+        `http://3.131.158.21:5005/inventory/delete-item/${itemIdToDelete}`
       );
       fetchInventoryItems();
       toast.success("Item deleted successfully");
@@ -183,7 +183,7 @@ function InventoryManagement() {
               <Card style={{ width: "18rem" }}>
                 <Card.Img
                   variant="top"
-                  src={`http://localhost:5005/uploads/${item.itemImage}`}
+                  src={`http://3.131.158.21:5005/uploads/${item.itemImage}`}
                   style={{ height: "200px", objectFit: "cover" }}
                 />
                 <Card.Body>
