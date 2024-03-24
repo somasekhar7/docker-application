@@ -9,10 +9,6 @@ const cors = require("cors");
 const app = express();
 const bodyParser = require("body-parser");
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public")));
-
 // Allow all origins for demonstration purposes
 app.use(cors());
 
@@ -49,6 +45,14 @@ const upload = multer({
   },
 });
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "localstorage", "uploads"))
+);
+
 // for addition function
 app.post("/api/addition", (req, res) => {
   const { num1, num2 } = req.body;
@@ -67,10 +71,10 @@ app.get("/inventory", async (req, res) => {
 });
 
 // Serve uploaded images
-app.use(
-  "/uploads",
-  express.static(path.join(__dirname, "localstorage", "uploads"))
-);
+// app.use(
+//   "/uploads",
+//   express.static(path.join(__dirname, "localstorage", "uploads"))
+// );
 
 // Add an inventory item
 app.post(
