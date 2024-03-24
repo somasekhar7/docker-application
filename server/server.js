@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
+const PORT = process.env.PORT || 5005;
 const InventoryItem = require("./inventoryModelItem");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -14,8 +15,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Allow all origins for demonstration purposes
 app.use(cors());
-
-const PORT = process.env.PORT || 5005;
 
 const uri =
   "mongodb+srv://somasekhar23:Soma2356@myapp-staging.sbbfkgh.mongodb.net/?retryWrites=true&w=majority&appName=myapp-staging";
