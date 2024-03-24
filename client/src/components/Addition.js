@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import "./Addition.css";
 
 function Addition() {
   const [num1, setNum1] = useState(0);
