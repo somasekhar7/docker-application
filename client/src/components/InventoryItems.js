@@ -22,9 +22,7 @@ function InventoryManagement() {
 
   const fetchInventoryItems = async () => {
     try {
-      const response = await axios.get(
-        "http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/inventory"
-      );
+      const response = await axios.get("http://localhost:5005/inventory");
       setInventoryItems(response.data);
     } catch (error) {
       console.error("Error fetching inventory items:", error);
@@ -52,7 +50,7 @@ function InventoryManagement() {
 
     try {
       await axios.post(
-        "http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/inventory/add-item",
+        "http://localhost:5005/inventory/add-item",
         formDataToSend
       );
       setFormData({
@@ -84,7 +82,7 @@ function InventoryManagement() {
     }
     try {
       await axios.put(
-        `http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/inventory/update-item/${editingItem._id}`,
+        `http://localhost:5005/inventory/update-item/${editingItem._id}`,
         {
           itemName: formData.itemName,
           itemQuantity: formData.itemQuantity,
@@ -107,7 +105,7 @@ function InventoryManagement() {
     setShowDeleteModal(false);
     try {
       await axios.delete(
-        `http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/inventory/delete-item/${itemIdToDelete}`
+        `http://localhost:5005/inventory/delete-item/${itemIdToDelete}`
       );
       fetchInventoryItems();
       toast.success("Item deleted successfully");
@@ -185,7 +183,7 @@ function InventoryManagement() {
               <Card style={{ width: "18rem" }}>
                 <Card.Img
                   variant="top"
-                  src={`http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/uploads/${item.itemImage}`}
+                  src={`http://localhost:5005/uploads/${item.itemImage}`}
                   style={{ height: "200px", objectFit: "cover" }}
                 />
                 <Card.Body>
