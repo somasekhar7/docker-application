@@ -10,22 +10,17 @@ const MainContent = () => {
   const [initialText, setInitialText] = useState("");
   const [initialBio, setInitialBio] = useState("");
 
-  // Function to handle loading initial value from localStorage
-  const loadInitialValue = () => {
-    const storedText =
-      localStorage.getItem("text") || "DARISI VENKATA VEERA SOMASEKHAR";
-    const storedBio =
-      localStorage.getItem("bio") ||
-      "I hold a Bachelor's degree in Computer Science from Anna University, where I graduated with honors. My undergraduate studies provided me with a solid foundation in fundamental computer science concepts, including data structures, algorithms, programming languages, and software engineering principles. As an MS student, I am eager to delve deeper into specialized areas of computer science and pursue advanced coursework in Machine Learning and Artificial Intelligence.";
-    setInitialText(storedText);
-    setText(storedText);
-    setInitialBio(storedBio);
-    setBio(storedBio);
-  };
-
   // Load initial value from localStorage on component mount
   useEffect(() => {
-    loadInitialValue();
+    const storedText = "DARISI VENKATA VEERA SOMASEKHAR";
+    const storedBio =
+      "I hold a Bachelor's degree in Computer Science from Anna University, where I graduated with honors. My undergraduate studies provided me with a solid foundation in fundamental computer science concepts, including data structures, algorithms, programming languages, and software engineering principles. As an MS student, I am eager to delve deeper into specialized areas of computer science and pursue advanced coursework in Machine Learning and Artificial Intelligence.";
+    if (storedText || storedBio) {
+      setInitialText(storedText);
+      setText(storedText);
+      setInitialBio(storedBio);
+      setBio(storedBio);
+    }
   }, []);
 
   // Handle input text change

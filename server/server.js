@@ -8,8 +8,6 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const bodyParser = require("body-parser");
-const User = require("./user");
-const bcrypt = require("bcryptjs");
 
 // Allow all origins for demonstration purposes
 app.use(cors());
@@ -54,88 +52,6 @@ app.use(
   "/uploads",
   express.static(path.join(__dirname, "localstorage", "uploads"))
 );
-
-// Login route
-app.post("/api/login", async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
-
-    // Update last login time
-    user.lastLoginAt = new Date();
-    await user.save();
-
-    res.json({ message: "Login successful" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Signup route
-app.post("/api/signup", async (req, res) => {
-  const { firstName, lastName, dob, email, password } = req.body;
-
-  try {
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: "Email is already registered" });
-    }
-
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create new user
-    const newUser = new User({
-      firstName,
-      lastName,
-      dob,
-      email,
-      password: hashedPassword,
-      createdAt: new Date(), // Set the created time
-    });
-    await newUser.save();
-
-    res.status(201).json({ message: "User registered successfully" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Get user profile route
-app.get("/api/profile/:email", async (req, res) => {
-  const userEmail = req.params.email;
-
-  try {
-    // Find the user by email
-    const user = await User.findOne({ email: userEmail });
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    // Return user details excluding password field
-    const userProfile = {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      dob: user.dob,
-      email: user.email,
-    };
-
-    res.json(userProfile);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
 
 // for addition function
 app.post("/api/addition", (req, res) => {

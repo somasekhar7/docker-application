@@ -16,13 +16,16 @@ function Addition() {
 
   const handleAddition = async (sum) => {
     try {
-      const response = await fetch("http://localhost:5005/api/addition", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ num1: parseInt(num1), num2: parseInt(num2) }),
-      });
+      const response = await fetch(
+        "http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/api/addition",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ num1: parseInt(num1), num2: parseInt(num2) }),
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to add numbers");
       }
