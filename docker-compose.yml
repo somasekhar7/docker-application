@@ -1,0 +1,51 @@
+version: "3.9"
+services:
+  mongo_db:
+    image: mongo:latest
+    restart: always
+    container_name: mongo_container
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - inventoryapp-db:/data/db
+
+  inventoryapp:
+    build:
+      context: ./server
+    ports:
+      - '5005:5005'
+    environment:
+      MONGODB_URI: mongodb://root:root@mongo_db:27017/
+    depends_on:
+      - mongo_db
+  
+  mongo-express:
+    image: mongo-express
+    environment:
+        - ME_CONFIG_MONGODB_SERVER=mongo_db
+        - ME_CONFIG_MONGODB_PORT=27017
+        - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+        - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
+        - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+        - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+        - ME_CONFIG_BASICAUTH_USERNAME=root
+        - ME_CONFIG_BASICAUTH_PASSWORD=root
+    links:
+        - mongo_db
+    ports:
+      - "8081:8081"
+
+  nginx:
+    restart: always
+    build:
+        context: ./nginx
+    ports:
+        - "80:80"
+    depends_on:
+      - inventoryapp
+        
+volumes:
+  inventoryapp-db:

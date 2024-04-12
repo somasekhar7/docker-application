@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { BACKEND_API_ENDPOINT } from "../constants";
 
 function Addition() {
   const [num1, setNum1] = useState(0);
@@ -16,16 +17,13 @@ function Addition() {
 
   const handleAddition = async (sum) => {
     try {
-      const response = await fetch(
-        "http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/api/addition",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ num1: parseInt(num1), num2: parseInt(num2) }),
-        }
-      );
+      const response = await fetch(`${BACKEND_API_ENDPOINT}/api/addition`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ num1: parseInt(num1), num2: parseInt(num2) }),
+      });
       if (!response.ok) {
         throw new Error("Failed to add numbers");
       }

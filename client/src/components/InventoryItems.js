@@ -3,6 +3,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Card, Row, Col, Form, Button, Modal, Alert } from "react-bootstrap"; // Import Alert component from react-bootstrap
+import { BACKEND_API_ENDPOINT } from "../constants";
 
 function InventoryManagement() {
   const [inventoryItems, setInventoryItems] = useState([]);
@@ -22,9 +23,7 @@ function InventoryManagement() {
 
   const fetchInventoryItems = async () => {
     try {
-      const response = await axios.get(
-        "http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/inventory"
-      );
+      const response = await axios.get(`${BACKEND_API_ENDPOINT}/inventory`);
       setInventoryItems(response.data);
     } catch (error) {
       console.error("Error fetching inventory items:", error);
@@ -52,7 +51,7 @@ function InventoryManagement() {
 
     try {
       await axios.post(
-        "http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/inventory/add-item",
+        `${BACKEND_API_ENDPOINT}/inventory/add-item`,
         formDataToSend
       );
       setFormData({
@@ -84,7 +83,7 @@ function InventoryManagement() {
     }
     try {
       await axios.put(
-        `http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/inventory/update-item/${editingItem._id}`,
+        `${BACKEND_API_ENDPOINT}/inventory/update-item/${editingItem._id}`,
         {
           itemName: formData.itemName,
           itemQuantity: formData.itemQuantity,
@@ -107,7 +106,7 @@ function InventoryManagement() {
     setShowDeleteModal(false);
     try {
       await axios.delete(
-        `http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/inventory/delete-item/${itemIdToDelete}`
+        `${BACKEND_API_ENDPOINT}/inventory/delete-item/${itemIdToDelete}`
       );
       fetchInventoryItems();
       toast.success("Item deleted successfully");
@@ -185,7 +184,7 @@ function InventoryManagement() {
               <Card style={{ width: "18rem" }}>
                 <Card.Img
                   variant="top"
-                  src={`http://ec2-18-221-207-9.us-east-2.compute.amazonaws.com:5005/uploads/${item.itemImage}`}
+                  src={`${BACKEND_API_ENDPOINT}/uploads/${item.itemImage}`}
                   style={{ height: "200px", objectFit: "cover" }}
                 />
                 <Card.Body>
